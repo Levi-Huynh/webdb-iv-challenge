@@ -83,6 +83,20 @@ router.get('/:id/ingredients',  async (req, res) => {
         }
   });
   
+  router.get('/:id/list',  async (req, res) => {
+    try{
+        const recipes = await Recipes.getRecipe(req.params.id);
+      res.status(200).json(recipes);
+        }catch (error) {
+            // log error to server
+            console.log(error);
+            res.status(500).json({
+              message: 'Error getting the ingredients for the recipe',
+            });
+          }
+    });
+    
+
 
 router.delete('/:id', async (req, res) => {
   try {

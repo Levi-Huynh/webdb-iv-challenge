@@ -6,11 +6,16 @@ module.exports = {
   add,
   update,
   remove,
-  getRecipeIngredients
+  getRecipeIngredients,
+  getRecipe
 };
 
+
+
 function find() {
-  return db('recipes');
+  return db('recipes as p')
+  .join('dishes as u', 'u.id', 'p.dish_id')
+  .select('p.id', 'p.name', 'p.instructions', 'u.name as Dish_Name')
 }
 
 function findById(id) {
@@ -59,4 +64,14 @@ function getRecipeIngredients(RecipeId) {
     .join('recipes as u', 'u.id', 'p.recipe_id')
     .select('p.id', 'p.ingredient_name', 'p.quantity','u.name as Recipe_Name')
     .where('p.recipe_id', RecipeId);
+}
+
+function getRecipe(RecipeId) {
+  return db('recipe_ingredients as p')
+    .join('recipes as u', 'u.id', 'p.recipe_id')
+    .join( 'dishes as i', 'i.id', 'u.dish_id') 
+    .join('ingredients as r', 'r.id', 'p.ingredient_id' )
+    .distinct('p.id', 'r.name as Ingredient', 'p.quantity as Ingredient_Quantity','u.name as Recipe_Name', 'i.name as Dish_Name' )
+    .where('p.recipe_id' ,RecipeId);
+  
 }
