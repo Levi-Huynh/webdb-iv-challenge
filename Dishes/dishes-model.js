@@ -6,6 +6,7 @@ module.exports = {
   add,
   update,
   remove,
+  getDishRecipes
 };
 
 function find() {
@@ -40,6 +41,15 @@ function update(id, changes) {
       }
     });
 }
+
+
+function getDishRecipes(DishId) {
+  return db('recipes as p')
+    .join('dishes as u', 'u.id', 'p.dish_id')
+    .select('p.id', 'p.name', 'p.instructions','u.name as Dish_Name')
+    .where('p.dish_id', DishId);
+}
+
 
 function remove(id) {
   return db('dishes')

@@ -70,6 +70,19 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+router.get('/:id/recipes',  async (req, res) => {
+  try{
+      const recipes = await Dishes.getDishRecipes(req.params.id);
+    res.status(200).json(recipes);
+      }catch (error) {
+          // log error to server
+          console.log(error);
+          res.status(500).json({
+            message: 'Error getting the recipes for the dishes',
+          });
+        }
+  });
+
 router.delete('/:id', async (req, res) => {
   try {
     const count = await Dishes.remove(req.params.id);

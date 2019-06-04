@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const helmet = require('helmet');
 
 const dishesRouter = require('../Dishes/dishes-router.js');
@@ -11,6 +12,7 @@ const server = express();
 
 server.use(helmet());
 server.use(express.json());
+server.use(cors());
 
 server.use('/api/dishes', dishesRouter);
 server.use('/api/recipes', recipeRouter);

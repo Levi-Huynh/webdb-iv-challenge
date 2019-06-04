@@ -1,12 +1,15 @@
 {
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "helmet": "^3.18.0",
     "knex": "^0.17.1",
     "sqlite3": "^4.0.8"
   },
   "scripts": {
-    "server": "nodemon"
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "heroku-postbuild": "cd reactclient && yarn && yarn run build"
   },
   "devDependencies": {
     "knex-cleaner": "^1.1.4",
